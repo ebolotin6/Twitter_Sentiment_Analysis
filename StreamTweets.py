@@ -8,19 +8,19 @@ keywords_m1 = ['watching','watching show','greatest show','watch season','netfli
 
 keywords_m2 = ['#watchingshow','#greatestshow','#watchseason','#favoriteshow','#bestshow','#greatestmovie','#greatacting','#newseason','#watchingtv','#bingewatching','#newepisode','#primevideo','#worstshow','#worstmovie','#lovethemovie','#oscarworthy','#moviesucks']
 
-keywords_a1 = ['health fitness','get fit','fitness','legday','workoutwednesday','treadmill','pilates','yoga','gym time','deadlift','squats','FitnessFriday','gymlife','workouts','fitness training','postgym','armday','shoulderday','fitnessgoals','runner','workout','workout motivation','lift hard','lift weight','go running','sweat forit','crossfit','morning workout','muscle','six pack','lunges','cardio','elliptical','cycling']
+keywords_f1 = ['health fitness','get fit','fitness','legday','workoutwednesday','treadmill','pilates','yoga','gym time','deadlift','squats','FitnessFriday','gymlife','workouts','fitness training','postgym','armday','shoulderday','fitnessgoals','runner','workout','workout motivation','lift hard','lift weight','go running','sweat forit','crossfit','morning workout','muscle','six pack','lunges','cardio','elliptical','cycling']
 
-keywords_a2 = ['#health','#gymtime','#fitnesstraining','#workoutmotivation','#lifthard','#liftweight','#gorunning','#sweatforit','#morningworkout','#sixpack','#triathlon']
+keywords_f2 = ['#health','#gymtime','#fitnesstraining','#workoutmotivation','#lifthard','#liftweight','#gorunning','#sweatforit','#morningworkout','#sixpack','#triathlon']
 
 keywords_m = keywords_m1 + keywords_m2
-keywords_a = keywords_a1 + keywords_a2
+keywords_f = keywords_f1 + keywords_f2
 
 ########################
 #	 Execution   
 ########################
 
 ### step 1: media group
-file_name_m = stream_tweets(keywords_m, option = 'user_info', file_name = 'streamed_tweets_media', max_tweets = 2000)
+file_name_m = stream_tweets(keywords_m, option = 'user_info', file_name = 'streamed_tweets_media', max_tweets = 10)
 
 ### step 1: athletic group
-file_name_a = stream_tweets(keywords_a, option = 'user_info', file_name = 'streamed_tweets_athletic', max_tweets = 2000)
+# file_name_a = stream_tweets(keywords_f, option = 'user_info', file_name = 'streamed_tweets_fitness', max_tweets = 2000)
