@@ -43,9 +43,11 @@ group_2 <- read.csv("streamed_tweets_media_clean_full_analysis.csv", header=TRUE
 
 ```{r, echo=FALSE}
 
-# Add column to both datasets to label each group
+# Add column to both datasets to label each group and convert group to factor
 group_1 = mutate(group_1, group = "fitness")
+group_1 = mutate(group_1, group = as.factor(group))
 group_2 = mutate(group_2, group = "media")
+group_2 = mutate(group_2, group = as.factor(group))
 
 # create list to exclude users that appear in both lists
 excluded_users <- list()
@@ -229,3 +231,17 @@ wilcox.test
 ```
 
 The Wilcox test confirms the T-Test of unequal variances, leading us to conclude that the NULL hypothesis should be rejected and that there is a significant difference in happiness between individuals that discuss fitness and those that discuss media.
+
+## Another nonparametric test that we can use to test whether our samples originate from the same distribution is the Kruskal Wallis test [2]. This test does not assume that our samples have equal variance or are normally distributed. This test will do well to tell us if the medians of both samples are statistically significantly different, and thus if we can reject the null hypothesis.
+
+[2] Kruskal-Wallis Test, https://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance
+
+```{r, echo=FALSE}
+
+k.test <- kruskal.test(sentiment_vader ~ group, data = combined_df)
+k.test
+
+```
+
+In this test, the p-value is smaller than our significance level of 0.05. As a result, we must reject our NULL hypothesis that people that discuss fitness are equally happy as people that discuss media.
+
