@@ -57,6 +57,7 @@ def StreamedTweets(file_name_json, sub_dir):
 
 	except Exception as e:
 		print("Error: ", e)
+		return False
 
 # decorator for TweetProgram class methods that prints the activity of a given method.
 def print_status(func):
@@ -211,9 +212,9 @@ class TweetProgram:
 			regex = re.compile(r'[^\u0000-\u007F]{5,}|^\s*$|\W{7,}|^(\d)+|^(#\w\b)+|^\"|^\*|^[A-Z]{5, }|[A-Z]$|^How|^The\s\d+|^Photos|(\'\')+|(top\s\d+|free|buy|class|discount|job|review|publish|clubs|manager|study|success|limited|release|help|gift|massage|schedule|services|check|join|pain|therapy|alternative|new\sproduct|learn|for\smen|for\swomen|revolution|leadership|ebay|click|promo|certified|store|pick|sign|log-in|login|tips|meet|secret|(\w+)for(\w+)|trainer)|(\$)|(\.\n\.)', re.IGNORECASE)
 
 
-		# get all indices for tweets list, and set excluded indices
-		all_indices = [i for i in range(len(tweets))]
-		excluded_indices = []
+		# get all users in tweet list and create list to hold excluded users
+		all_users = set([tweet[2] for tweet in tweets])
+		excluded_users = []
 
 		# get median hashtag count and also a list of hashtag counts
 		median, hashtag_counts = self._get_median_hashtags(tweets)
@@ -233,28 +234,30 @@ class TweetProgram:
 				test = self._percent_same(current_tweet, past_tweet)
 
 				if test >= .5:
-					excluded_indices.append(i)
+					user_id = tweets[i][2]
+					excluded_users.append(user_id)
 		
 		# loop through tweets and hashtag counts and build exclusion index
 		for i, values in enumerate(zip(tweets, hashtag_counts)):
 			tweet = values[0][3]
+			user_id = values[0][2]
 			hashtag_count = values[1]
 			mid_68 = median + stdev
 
-			# exclude tweets that have profanity or a hashtag_count above the median + 1 stdev
+			# exclude authors/users of tweets that have profanity or a hashtag_count above the median + 1 stdev
 			if profanity.contains_profanity(tweet) == True or hashtag_count > mid_68:
-				excluded_indices.append(i)
+				excluded_users.append(user_id)
 			else:
 				match = regex.search(tweet)
 				if match:
-					excluded_indices.append(i)
+					excluded_users.append(user_id)
 				else:
 					pass
 
-		# filter all_indices to exclude excluded_indices
-		excluded_indices = set(excluded_indices)
-		filtered_indices = list(filter(lambda x:  x not in excluded_indices, all_indices))
-		filtered_tweets = [tweets[index] for index in filtered_indices]
+		# filter out excluded_users from all_users and return filtered tweets
+		excluded_users = set(excluded_users)
+		filtered_users = list(filter(lambda x:  x not in excluded_users, all_users))
+		filtered_tweets = [tweet for tweet in tweets if tweet[2] in filtered_users]
 
 		try:
 			# print to csv
@@ -645,7 +648,7 @@ def stream_tweets(query, option = 'user_info', file_name = 'user_ids', max_tweet
 
 		# Create new directory to store stream and sample data in.
 		while True:
-			sub_dir = "Experiment_" + str(index)
+			sub_dir = "Samples_Round_" + str(index)
 			
 			if os.path.exists(sub_dir):
 				index += 1

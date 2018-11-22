@@ -31,16 +31,8 @@ Steps for program workflow:
 	- returns: json
 	- output: csv and json
 
-5. Produce analysis of tweets
+5. Generate sentiment for tweets
 	- input: json
 	- returns: csv
 	- output: csv
-
-1. user instantiates an object based on streamed user tweets.
-
-next, he can:
-	- 2 - clean streamed tweets (or not)
-	- 3 - get_full_tweets
-	- 4 - clean full tweets (must do 3)
-	- 5 - analyze full tweets (must do 3 and 4)
 

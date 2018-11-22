@@ -19,20 +19,13 @@ library(dplyr)
 library(ggplot2)
 ```
 
-INSERT INTRO
-- INSERT definition of happiness
-- INSERT definition of samples
-INSERT assumptions about filters
-INSERT METHOD of collection (and quantity deduced)
-INSERT NULL HYPOTHESIS + A. HYPOTHESIS
-
 This data has been procured and cleaned in Python and is ready for analysis. We are only concerned with the sentiment scores produces by NLTK's VADER algorithm (and not those from TextBlob, which have also been computed in this data).
 
 ## First, let's read in data for both groups: tweets of people who talk about fitness and people who talk about media.
 
 ```{r, echo=FALSE}
 # IMPORTANT: change working dir
-setwd('Experiment_1/')
+setwd('Samples_Round_1/')
 
 # read in csvs of both sample groups
 group_1 <- read.csv("streamed_tweets_fitness_clean_full_analysis.csv", header=TRUE, sep=",")
@@ -72,7 +65,7 @@ group_2 <- group_2[!(group_2$user_id %in% excluded_users),]
 ```{r, echo=FALSE}
 
 # select sample sizes and possible ranges to generate indices
-n <- 5000
+n <- 10000
 group_1_index_range <- nrow(group_1)
 group_2_index_range <- nrow(group_2)
 
@@ -232,7 +225,7 @@ wilcox.test
 
 The Wilcox test confirms the T-Test of unequal variances, leading us to conclude that the NULL hypothesis should be rejected and that there is a significant difference in happiness between individuals that discuss fitness and those that discuss media.
 
-## Another nonparametric test that we can use to test whether our samples originate from the same distribution is the Kruskal Wallis test [2]. This test does not assume that our samples have equal variance or are normally distributed. This test will do well to tell us if the medians of both samples are statistically significantly different, and thus if we can reject the null hypothesis.
+## Another nonparametric test that we can use to check whether our samples originate from the same distribution is the Kruskal Wallis test [2], which compares/analyzes the medians of two independent samples. Being nonparametric, this test does not assume that our samples have equal variance or are normally distributed. The KW analysis will do well to tell us if the medians of both samples are statistically significantly different, and thus if we can reject the null hypothesis.
 
 [2] Kruskal-Wallis Test, https://en.wikipedia.org/wiki/Kruskal–Wallis_one-way_analysis_of_variance
 
