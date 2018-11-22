@@ -6,11 +6,11 @@ import tweepy
 import os.path
 import json
 import csv
-import pprint
 import dill
 import re
 import math
 import statistics
+import requests
 from os import makedirs
 from twitter_credentials import *
 from textblob import TextBlob as tb
@@ -87,6 +87,17 @@ def get_abs_path(file_name, sub_dir):
 	else:
 		print("Incorrect directory.")
 		return False
+
+# get list of banned (profane) words
+def get_profanity_list():
+	try:
+		r = requests.get('https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master/en')
+		profanity_words = r.content.decode("utf-8") 
+		profanity_list = profanity_words.split("\n")
+		return profanity_list
+
+	except Exception as e:
+		print("Error: ", e)
 
 # class for tweet stream json objects that need to be cleaned, fetched in full, and analyzed for sentiment.
 class TweetProgram:
@@ -204,13 +215,7 @@ class TweetProgram:
 			tweet.append(text_len)
 
 		# regex pattern to filter out invalid tweets from streamed data. See readme for details.
-		if self.tweets_type == 'stream':
-			regex = re.compile(r'^(\d)+|^(#\w\b)+|^\"|^\*|^[A-Z]{5, }|[A-Z]$|^How|^The\s\d+|^Photos|(\'\')+|(free|buy|get|class|connect|discount|now|read|job|video|news|follow|added|review|publish|clubs|manager|study|success|limited|release|help|gift|ideas|massage|schedule|services|check|join|pain|therapy|alternative|new\schallenge|product|need|learn|for\smen|for\swomen|revolution|leadership|weight\sloss|diet\splan|ebay|click|promo|certified|store|pick|sign|log-in|login|tips|meet|secret|improve|listen|(\w+)for(\w+)|trainer)|(\$|\+|\@|\?|\?$)|(\.\n\.)|^$', re.IGNORECASE)
-		
-		# regex pattern to filter out invalid tweets from full data. See readme.
-		else:
-			regex = re.compile(r'[^\u0000-\u007F]{5,}|^\s*$|\W{7,}|^(\d)+|^(#\w\b)+|^\"|^\*|^[A-Z]{5, }|[A-Z]$|^How|^The\s\d+|^Photos|(\'\')+|(top\s\d+|free|buy|class|discount|job|review|publish|clubs|manager|study|success|limited|release|help|gift|massage|schedule|services|check|join|pain|therapy|alternative|new\sproduct|learn|for\smen|for\swomen|revolution|leadership|ebay|click|promo|certified|store|pick|sign|log-in|login|tips|meet|secret|(\w+)for(\w+)|trainer)|(\$)|(\.\n\.)', re.IGNORECASE)
-
+		regex = re.compile(r'[^\u0000-\u007F]{5,}|^\s*$|\W{7,}|^(\d)+|^(#\w\b)+|^\"|^\*|^[A-Z]{5, }|[A-Z]$|^How|^The\s\d+|^Photos|(\'\')+|(top\s\d+|free|buy|get|class|connect|discount|now|read|job|video|news|follow|added|review|publish|clubs|manager|study|success|limited|sex|release|help|gift|ideas|massage|schedule|services|check|join|pain|therapy|alternative|new\schallenge|product|need|learn|for\smen|for\swomen|revolution|leadership|weight\sloss|diet\splan|ebay|click|promo|certified|store|pick|sign|log-in|login|tips|meet|secret|improve|listen|(\w+)for(\w+)|trainer)|(\$|\+|\@|\?|\?$)|(\.\n\.)|^$', re.IGNORECASE)
 
 		# get all users in tweet list and create list to hold excluded users
 		all_users = set([tweet[2] for tweet in tweets])
@@ -226,17 +231,10 @@ class TweetProgram:
 		if median == 0:
 			median = math.ceil(statistics.mean(hashtag_counts))
 
-		# remove tweets that are 50% or more similar to eachother.
-		if self.tweets_type == "full":
-			for i in range(1, len(tweets)):
-				current_tweet = tweets[i][3]
-				past_tweet = tweets[i-1][3]
-				test = self._percent_same(current_tweet, past_tweet)
+		# get list of profanities and load it
+		profanity_list = get_profanity_list()		
+		profanity.load_words(profanity_list)
 
-				if test >= .5:
-					user_id = tweets[i][2]
-					excluded_users.append(user_id)
-		
 		# loop through tweets and hashtag counts and build exclusion index
 		for i, values in enumerate(zip(tweets, hashtag_counts)):
 			tweet = values[0][3]
@@ -244,8 +242,16 @@ class TweetProgram:
 			hashtag_count = values[1]
 			mid_68 = median + stdev
 
-			# exclude authors/users of tweets that have profanity or a hashtag_count above the median + 1 stdev
-			if profanity.contains_profanity(tweet) == True or hashtag_count > mid_68:
+			# testing for spammy tweets
+			current_tweet = tweets[i][3]
+			past_tweet = tweets[i-1][3]
+			test = self._percent_same(current_tweet, past_tweet)
+
+			# testing for profanity
+			profanity_test = profanity.contains_profanity(tweet)
+
+			# exclude authors/users of spammy tweets, or tweets that have profanity, or a hashtag_count above the median + 1 stdev
+			if test >= .5 or profanity_test == True or hashtag_count > mid_68:
 				excluded_users.append(user_id)
 			else:
 				match = regex.search(tweet)

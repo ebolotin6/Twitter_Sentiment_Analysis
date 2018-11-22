@@ -65,7 +65,7 @@ group_2 <- group_2[!(group_2$user_id %in% excluded_users),]
 ```{r, echo=FALSE}
 
 # select sample sizes and possible ranges to generate indices
-n <- 10000
+n <- 9700
 group_1_index_range <- nrow(group_1)
 group_2_index_range <- nrow(group_2)
 
