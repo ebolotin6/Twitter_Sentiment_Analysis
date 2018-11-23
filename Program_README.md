@@ -1,6 +1,6 @@
-# Twitter Sentiment Analysis (TSA) Program
-### Eli (Ilya) Bolotin
----
+# Twitter Sentiment Analysis Program
+#### Author: Eli (Ilya) Bolotin
+
 
 ### Program Description -
 
@@ -17,9 +17,9 @@ The original question that this program was designed to answer was:
 * Are people that talk about fitness happier than people that talk about media (tv, movies, youtube, etc.)?
 * This is an experiment in which we are comparing 2 different groups (samples).
 
-### Experiment workflow -
+### Example experiment -
 
-Consider 2 groups (example): people that talk (tweet) about fitness and people that tweet about media.
+Consider 2 groups (example): people that talk (tweet) about fitness and people that tweet about media. To conduct the experiment, follow the steps below:
 1. Create (unbiased) keywords and hashtags that define these groups.
 2. Stream tweets using keywords/hashtags for both groups (Twitter Stream API)
 3. Clean the streamed tweets (via program)
@@ -27,7 +27,7 @@ Consider 2 groups (example): people that talk (tweet) about fitness and people t
 5. Run sentiment analysis for fetched tweets.
 6. Conduct statistical analysis in R.
 
-### Directions for program execution (program workflow) -
+### Directions -
 
 * Step 1: Open StreamTweets.py and define keywords/hashtags for 2 groups
 * Step 2: Run StreamTweets.py to collect streamed tweets.
