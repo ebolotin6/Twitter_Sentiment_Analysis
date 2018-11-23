@@ -1,5 +1,5 @@
 # Twitter Sentiment Analysis Program
-#### Author: Eli (Ilya) Bolotin
+#### Author: Eli Bolotin
 
 
 ### Program Description -
