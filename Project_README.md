@@ -16,7 +16,7 @@ This is project seeks to answer the question:
 ### Directions -
 
 1. Read the project summary to learn about the project.
-2. Review the Twitter_Sentiment_Analysis.pdf to review th statistics analysis.
+2. Review the Twitter_Sentiment_Analysis.pdf to review statistical analysis.
 3. Open the TSA folder to review and understand the code. Start with the README.
 
 

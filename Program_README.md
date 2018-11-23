@@ -1,7 +1,6 @@
 # Twitter Sentiment Analysis Program
 #### Author: Eli Bolotin
 
-
 ### Program Description -
 
 1. This program is designed to collect, clean and produce sentiment analysis for a statistics experiment using Twitter data.

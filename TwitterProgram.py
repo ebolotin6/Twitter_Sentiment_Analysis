@@ -1,5 +1,5 @@
-# Eli Bolotin
 # Twitter Sentiment Analysis Program
+# Eli Bolotin
 # Copyright 2018, All Rights Reserved.
 
 import tweepy
@@ -590,18 +590,18 @@ class MyStreamListener(tweepy.StreamListener):
 				# eliminate retweets, bots, replies, quotes, and sensitive material
 				if not 'RT @' in data['text'] and user_id_len < 18  and reply_to1 == None and reply_to2 == None and quote_status == False and sensitive == False and retweeted == False:
 					
-					# pull all data for each tweet
-					if self.option == "all_info":
-						self.tweets.append(data)
-						try:
-							with open(self.abs_file_path + ".json", 'a') as f:
-								# write to json for every 10 tweets added
-								if len(self.tweets) % 10 == 0:
-									f.seek(0)
-									f.truncate()
-									f.write(json.dumps(self.tweets))
-						except Exception as e:
-							print(e)
+					# # pull all data for each tweet
+					# if self.option == "all_info":
+					# 	self.tweets.append(data)
+					# 	try:
+					# 		with open(self.abs_file_path + ".json", 'a') as f:
+					# 			# write to json for every 10 tweets added
+					# 			if len(self.tweets) % 10 == 0:
+					# 				f.seek(0)
+					# 				f.truncate()
+					# 				f.write(json.dumps(self.tweets))
+					# 	except Exception as e:
+					# 		print(e)
 					
 					# pull just user data for each tweet
 					elif self.option == 'user_info':
