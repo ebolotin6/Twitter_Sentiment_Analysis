@@ -14,7 +14,7 @@ This is project seeks to answer the question:
 
 ### Link to program
 
-This project was created entirely with the purpose-built [Twitter Sentiment Analyzer](https://github.com/ebolotin6/Twitter_Sentiment_Analyzer/ "Twitter Sentiment Analyzer")
+[Twitter Sentiment Analyzer](https://github.com/ebolotin6/Twitter_Sentiment_Analyzer/ "Twitter Sentiment Analyzer") - This project is created entirely with this purpose-built program.
 
 ### Viewing directions -
 
