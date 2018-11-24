@@ -7,7 +7,7 @@ This is project seeks to answer the question:
 * Are people that talk about fitness happier than people that talk about media (tv, movies, youtube, etc.)?
 * Data source: Twitter data
 
-### Viewing directions -
+### Viewing instructions -
 
 1. Read the project summary to learn about the project.
 2. Review the Twitter_Sentiment_Analysis.pdf to review statistical analysis.
