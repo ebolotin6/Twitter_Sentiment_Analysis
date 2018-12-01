@@ -13,7 +13,7 @@ This is project seeks to answer the question:
 2. Review the Twitter_Sentiment_Analysis.pdf to review statistical analysis.
 3. Open the TSA folder to review and understand the code. Start with the README.
 
-### Directory contents -
+### Project (directory) contents -
 
 * **Project_Summary.pdf** - summarizes the project
 * **Twitter_Sentiment_Analysis.pdf** - Statistics analysis, round 1
@@ -44,4 +44,4 @@ This is project seeks to answer the question:
 	- 'streamed_tweets_media_clean_full_analysis.csv' (import this into R.)
 
 
-Copyright 2018, All Rights Reserved.
+Copyright 2018 Eli Bolotin, All Rights Reserved.
