@@ -10,7 +10,7 @@ This is project seeks to answer the question:
 ### Viewing instructions -
 
 1. Read the **Project_Summary.pdf** to learn about the project.
-2. Review the **Twitter_Sentiment_Analysis.pdf** to review statistical analysis.
+2. Review the **Twitter_Sentiment_Analysis.pdf** to understand statistical analysis.
 3. Check out [**Twitter_Sentiment_Analyzer**](https://github.com/ebolotin6/Twitter_Sentiment_Analyzer) to review project code.
 
 ### Project (directory) contents -
