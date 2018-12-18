@@ -44,4 +44,4 @@ This is project seeks to answer the question:
 	- '*streamed_tweets_media_clean_full_analysis.**csv***' (import this into R.)
 
 <br /><br />
-Copyright 2018 Eli Bolotin, All Rights Reserved.
+Copyright 2018 Eli Bolotin
